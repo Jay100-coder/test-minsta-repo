@@ -25,7 +25,6 @@ const colors = {
 
 const css = `
 
-
 .nws-modal-wrapper .nws-modal {
   height: auto !important;
 }
