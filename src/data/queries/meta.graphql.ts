@@ -16,6 +16,7 @@ query v2_omnisite_GetMetadataStaticReferences($metadataId: String!) {
       distinct_on: owner
     ) {
       owner
+      minted_timestamp
     }
 }
 `;

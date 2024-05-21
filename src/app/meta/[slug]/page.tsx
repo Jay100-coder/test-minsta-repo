@@ -16,7 +16,6 @@ export async function generateMetadata({
     network: constants.network as "testnet" | "mainnet",
   });
 
-
   return {
     metadataBase: new URL("https://minsta.mintbase.xyz"),
     title: `${process.env.NEXT_PUBLIC_APP_TITLE || 'My Minsta Dapp'} - ${posts?.data?.nft_metadata?.[0]?.title}`,

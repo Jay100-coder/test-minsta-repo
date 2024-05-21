@@ -9,7 +9,6 @@ import InlineSVG from "react-inlinesvg";
 import { getImageUrl } from "@/utils/imageUrl";
 
 export const MetaPage = ({ meta, slug }: any) => {
-  console.log(meta)
   const finalUrl = getImageUrl(meta?.data?.nft_metadata?.[0]?.media);
 
   return (

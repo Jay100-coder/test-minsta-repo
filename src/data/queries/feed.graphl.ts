@@ -13,8 +13,8 @@ export const FETCH_FEED = gql`
         minter: { _in: $accountIds }
         nft_contract_id: { _eq: $contractAddress }
         burned_timestamp: { _is_null: true }
-        metadata_content_flag: { _is_null: false }
-        nft_contract_content_flag: { _is_null: false }
+        metadata_content_flag: { _is_null: true }
+        nft_contract_content_flag: { _is_null: true }
       }
       order_by: { minted_timestamp: desc },
        offset: $offset,

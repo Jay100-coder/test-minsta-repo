@@ -2,23 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.containerCol {
-  flex-direction: column;
-}
-
-.inputStyle{
-  border: 1px solid #dddddd;
-  border-radius: 5px;
-}
-
-.scroll-y{
-  overflow-y: scroll;
-}
-
-.tempRow{
-  display: flex;
-  flex-direction: row;
-}
 
 .storeImg {
   height: 320px;

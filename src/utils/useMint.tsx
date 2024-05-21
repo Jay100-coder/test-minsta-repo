@@ -171,7 +171,6 @@ const useMintImage = () => {
       const refObject = {
         title: titleAndDescription.title,
         description: titleAndDescription.description,
-        content_flag:'test',
         media: photoFile,
       };
       const uploadedData = await uploadReferenceObject(refObject);
@@ -201,11 +200,11 @@ const useMintImage = () => {
       const refObject = {
         title: photoInfo.title,
         description: photoInfo.description,
-        content_flag:'test',
         media: photoFile,
       };
       const uploadedData = await uploadReferenceObject(refObject);
       const metadata = { reference: uploadedData?.id };
+
       await performTransaction(wallet, metadata);
     } catch (error: any) {
       setError(
