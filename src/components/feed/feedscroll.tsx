@@ -4,10 +4,11 @@ import { useMemo, useRef } from "react";
 import { useIntersectionObserver } from "usehooks-ts";
 import { MemoizedImageThumb } from "./ImageThumb";
 
-export const FeedScroll = ({ blockedNfts }: any) => {
+export const FeedScroll = ({ blockedNfts, addFilter }: any) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ref, {});
   const isVisible = !!entry?.isIntersecting;
+  const filterDates = [{eventName: 'Dev Test', date: "2024-05-17"}, {eventName: 'BTCPizzaDay', date: "2024-05-22"}]
 
   const { items, loadingItems, total, error } = useInfiniteScrollGQL(
     "q_FETCH_FEED",
@@ -16,9 +17,23 @@ export const FeedScroll = ({ blockedNfts }: any) => {
   );
 
   const memoizedData = useMemo(() => {
+
     const uniqueMetadataIds = new Set<string>();
 
-    const filteredData = items?.filter((token: any) => {
+    const userFilter = items?.filter((token: any) => {
+      if(addFilter === "All"){
+        return true
+      } else {
+        const chosenFilter = filterDates.filter((date) => {
+          return date.eventName === addFilter
+        })
+  
+        return token?.createdAt?.split('T')[0] === chosenFilter[0].date
+      }
+    })
+
+
+    const filteredData = userFilter?.filter((token: any) => {
       if (uniqueMetadataIds.has(token.metadata_id)) {
         return false;
       }
@@ -34,7 +49,7 @@ export const FeedScroll = ({ blockedNfts }: any) => {
     });
 
     return filteredData;
-  }, [blockedNfts, items]);
+  }, [blockedNfts, items, addFilter]);
 
   if (error) {
     return (

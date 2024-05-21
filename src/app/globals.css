@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 .storeImg {
   height: 320px;
   width:100%;

@@ -7,7 +7,9 @@ export const FirstToken = (
 
 // if error message comes from first token fetch it will remove it from render
 
+
   if (firstTokenProps?.isFirstTokenError) {
+
     return null;
   }
 

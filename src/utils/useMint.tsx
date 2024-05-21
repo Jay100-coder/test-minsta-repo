@@ -40,6 +40,8 @@ const useMintImage = () => {
         "2facb4a474a0462c15041b78b1ad70952ea46b5ec6ad29583c0b29dbd4249591";
       const response = await addRequest(requestPayload, requestHash);
 
+      console.log(JSON.parse(response.output.join("")))
+
       return JSON.parse(response.output.join(""));
     } catch (error) {
       console.error("Failed to get title and description:", error);
@@ -173,6 +175,7 @@ const useMintImage = () => {
       };
       const uploadedData = await uploadReferenceObject(refObject);
       const metadata = { reference: uploadedData?.id };
+     
       await performTransaction(wallet, metadata);
     } catch (error: any) {
       setError(
@@ -183,7 +186,36 @@ const useMintImage = () => {
     }
   };
 
-  return { mintImage, loading, error };
+  const mintImageWithoutAi = async (photo: string, photoInfo: any) => {
+    if (!activeAccountId) {
+      setError("Active account ID is not set.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const wallet = await getWallet();
+      const photoFile = convertBase64ToFile(photo);
+      const refObject = {
+        title: photoInfo.title,
+        description: photoInfo.description,
+        media: photoFile,
+      };
+      const uploadedData = await uploadReferenceObject(refObject);
+      const metadata = { reference: uploadedData?.id };
+
+      await performTransaction(wallet, metadata);
+    } catch (error: any) {
+      setError(
+        error?.message || "An error occurred during the minting process."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { mintImage, mintImageWithoutAi, loading, error };
 };
 
 export default useMintImage;

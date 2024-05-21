@@ -7,6 +7,8 @@ import { DynamicGrid } from "./DynamicGrid";
 import { FirstFeed } from "./FirstFeed";
 import { FirstToken } from "./FirstToken";
 import { FeedScroll } from "./feed/feedscroll";
+import { useEffect, useState } from "react";
+
 
 export const HomePage = () => {
   const {
@@ -16,7 +18,9 @@ export const HomePage = () => {
     totalLoading,
     totalNfts,
   } = useHomePageData();
+
   const { connect, isConnected } = useMbWallet();
+  let [selectedValue, setSelectedValue] = useState('All');
 
   const router = useRouter();
 
@@ -27,6 +31,22 @@ export const HomePage = () => {
       router.push("/camera");
     }
   };
+
+  const DropDown = () => {
+    const handleChange = (e:any) => {
+      setSelectedValue(e.target.value)
+    }
+  
+    return (
+      <select value={selectedValue} onChange={handleChange}>
+      <option value="All">All Mints</option>
+      <option value="Dev Test">Minsta Dev Tests</option>
+      </select>
+      );
+  
+  }
+
+  useEffect(() => {}, [selectedValue])
 
   return !totalLoading && !totalNfts ? (
     <main className="flex flex-col items-center justify-center h-screen">
@@ -39,11 +59,12 @@ export const HomePage = () => {
       </button>
     </main>
   ) : (
-    <main className="px-4 lg:px-12 mx-auto flex flex-col items-center justify-center space-y-4 ">
-      <DynamicGrid mdCols={2} nColsXl={4} nColsXXl={6}>
+    <main className="py-20 lg:px-12 mx-auto flex flex-col items-center justify-center space-y-4 ">
+      <DropDown />
+      <DynamicGrid>
         <FirstToken {...firstTokenProps} />
         <FirstFeed tokensFetched={tokensFetched} blockedNfts={blockedNfts} />
-        <FeedScroll blockedNfts={blockedNfts} />
+        <FeedScroll blockedNfts={blockedNfts} addFilter={selectedValue} />
       </DynamicGrid>
     </main>
   );

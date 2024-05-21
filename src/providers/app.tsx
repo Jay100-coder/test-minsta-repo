@@ -15,6 +15,7 @@ export const AppContext = createContext<{
   isMainModalOpen: boolean;
   isRewardsModalOpen: boolean;
   mintImage: (photo: string) => void;
+  mintImageWithoutAi: (photo: string, photoInfo: Object) => void;
   isLoading: boolean;
 }>({
   cameraRef: undefined,
@@ -26,6 +27,7 @@ export const AppContext = createContext<{
   isMainModalOpen: false,
   isRewardsModalOpen: false,
   mintImage: (photo: string) => null,
+  mintImageWithoutAi: (photo: string, photoInfo: Object) => null,
   isLoading: false,
 });
 
@@ -39,6 +41,7 @@ interface IAppConsumer {
   isMainModalOpen: boolean;
   isRewardsModalOpen: boolean;
   mintImage: (photo: string) => void;
+  mintImageWithoutAi: (photo: string, photoInfo: Object) => void;
   isLoading: false;
 }
 
@@ -51,7 +54,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMainModalOpen, setMainModalOpen] = useState(false);
   const [isRewardsModalOpen, setRewardsModalOpen] = useState(false);
 
-  const { mintImage, loading, error } = useMintImage();
+  const { mintImage, mintImageWithoutAi, loading, error } = useMintImage();
 
   const handleOpenModal = (modalType: string) => {
     if (modalType === "default") {
@@ -93,6 +96,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
           isMainModalOpen,
           isRewardsModalOpen,
           mintImage: mintImage,
+          mintImageWithoutAi: mintImageWithoutAi,
           isLoading: loading,
         }}
       >
