@@ -34,5 +34,5 @@ export interface FirstTokenProps {
   firstTokenisBlocked: boolean;
   isFirstTokenError:boolean
   addFilter: string|null;
-  ownerFilter: string|null;
+  // ownerFilter: string|null;
 }

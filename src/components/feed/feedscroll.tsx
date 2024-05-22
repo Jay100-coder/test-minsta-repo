@@ -16,8 +16,6 @@ export const FeedScroll = ({ blockedNfts, addFilter, ownerFilter }: any) => {
     { query: FETCH_FEED }
   );
 
-  //test_jay_100.testnet
-
   const memoizedData = useMemo(() => {
 
     const uniqueMetadataIds = new Set<string>();
@@ -25,11 +23,7 @@ export const FeedScroll = ({ blockedNfts, addFilter, ownerFilter }: any) => {
     const userFilter = items?.filter((token: any) => {
       if(addFilter === "All"){
         return true
-      } else if (addFilter === "By Owner" || ownerFilter !== ""){
-        const extension = process.env.NEXT_PUBLIC_NETWORK === "testnet" ? "testnet" : "near"
-        return token?.owner === `${ownerFilter}.${extension}`
-      }
-       else {
+      } else {
         const chosenFilter = filterDates.filter((date) => {
           return date.eventName === addFilter
         })
