@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .storeImg {
   height: 320px;
   width:100%;
@@ -107,4 +106,27 @@ header {
 
 .gradientButton {
   background: linear-gradient(to right, var(--gradOne), var(--gradTwo));
+}
+
+.filterInput, .inputStyle{
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+}
+
+.filterInput:focus, .inputStyle:focus{
+  outline: none;
+}
+
+.containerCol{
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-y{
+  overflow-y: scroll;
+}
+
+.tempRow{
+  display: flex;
+  flex-direction: row;
 }
