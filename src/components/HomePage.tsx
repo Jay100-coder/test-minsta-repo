@@ -45,7 +45,6 @@ export const HomePage = () => {
         <select name="filter" value={selectedValue} onChange={handleChange}>
        <option value="All">All Mints</option>
        <option value="BTC Pizza">BTC Pizza Day</option>
-       <option value="By Owner">By Owner</option>
      </select>
       </label>
     </>
@@ -70,9 +69,9 @@ export const HomePage = () => {
 
 
       <DynamicGrid>
-        {selectedValue === "By Owner" ? (<FirstToken {...firstTokenProps} {...{addFilter: selectedValue, ownerFilter: ownerID}} />):(<FirstToken {...firstTokenProps} {...{addFilter: selectedValue}} />)}
+        <FirstToken {...firstTokenProps} {...{addFilter: selectedValue}} />
         <FirstFeed tokensFetched={tokensFetched} blockedNfts={blockedNfts} />
-        {selectedValue === "By Owner" ? (<FeedScroll blockedNfts={blockedNfts} addFilter={selectedValue} ownerFilter={ownerID} />):<FeedScroll blockedNfts={blockedNfts} addFilter={selectedValue} />}
+        <FeedScroll blockedNfts={blockedNfts} addFilter={selectedValue} />
       </DynamicGrid>
     </main>
   );
