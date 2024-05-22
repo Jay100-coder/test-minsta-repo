@@ -4,17 +4,19 @@ import { useMemo, useRef } from "react";
 import { useIntersectionObserver } from "usehooks-ts";
 import { MemoizedImageThumb } from "./ImageThumb";
 
-export const FeedScroll = ({ blockedNfts, addFilter }: any) => {
+export const FeedScroll = ({ blockedNfts, addFilter, ownerFilter }: any) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const entry = useIntersectionObserver(ref, {});
   const isVisible = !!entry?.isIntersecting;
-  const filterDates = [{eventName: 'Dev Test', date: "2024-05-17"}, {eventName: 'BTCPizzaDay', date: "2024-05-22"}]
+  const filterDates = [{eventName: 'BTC Pizza', date: "2024-05-22"}]
 
   const { items, loadingItems, total, error } = useInfiniteScrollGQL(
     "q_FETCH_FEED",
     isVisible,
     { query: FETCH_FEED }
   );
+
+  //test_jay_100.testnet
 
   const memoizedData = useMemo(() => {
 
@@ -23,7 +25,11 @@ export const FeedScroll = ({ blockedNfts, addFilter }: any) => {
     const userFilter = items?.filter((token: any) => {
       if(addFilter === "All"){
         return true
-      } else {
+      } else if (addFilter === "By Owner" || ownerFilter !== ""){
+        const extension = process.env.NEXT_PUBLIC_NETWORK === "testnet" ? "testnet" : "near"
+        return token?.owner === `${ownerFilter}.${extension}`
+      }
+       else {
         const chosenFilter = filterDates.filter((date) => {
           return date.eventName === addFilter
         })
@@ -49,7 +55,7 @@ export const FeedScroll = ({ blockedNfts, addFilter }: any) => {
     });
 
     return filteredData;
-  }, [blockedNfts, items, addFilter]);
+  }, [blockedNfts, items, addFilter, ownerFilter]);
 
   if (error) {
     return (

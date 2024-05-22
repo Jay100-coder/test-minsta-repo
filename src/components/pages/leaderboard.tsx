@@ -15,6 +15,8 @@ export const LeaderboardPage = () => {
     nfts.push(count);
   });
 
+  console.log(leaderboard)
+
   const sum = nfts?.reduce((x: number, y: number) => x + y, 0);
 
   return (

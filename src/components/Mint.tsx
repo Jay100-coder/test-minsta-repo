@@ -30,7 +30,7 @@ export function Mint({
           </h1>
         </>
       ) : (
-        <div className="h-full w-64 md:h-96 md:w-96 flex flex-col gap-4">
+        <div className="h-full w-64 md:h-96 md:w-96 flex flex-col gap-4 p-5">
           <img src={currentPhoto} />
 
           <div className="flex gap-4 w-full containerCol">

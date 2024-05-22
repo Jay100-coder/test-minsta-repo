@@ -5,6 +5,7 @@ export interface TokenData {
   media: string;
   metadata_id: string;
   title: string;
+  owner: string;
 }
 
 export interface TokenFeedData {
@@ -32,4 +33,6 @@ export interface FirstTokenProps {
   isLoading: boolean;
   firstTokenisBlocked: boolean;
   isFirstTokenError:boolean
+  addFilter: string;
+  ownerFilter: string;
 }

@@ -7,7 +7,7 @@ import { DynamicGrid } from "./DynamicGrid";
 import { FirstFeed } from "./FirstFeed";
 import { FirstToken } from "./FirstToken";
 import { FeedScroll } from "./feed/feedscroll";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export const HomePage = () => {
@@ -20,7 +20,8 @@ export const HomePage = () => {
   } = useHomePageData();
 
   const { connect, isConnected } = useMbWallet();
-  let [selectedValue, setSelectedValue] = useState('All');
+  const [selectedValue, setSelectedValue] = useState('All');
+  const [ownerID, setOwnerID] = useState("");
 
   const router = useRouter();
 
@@ -38,15 +39,19 @@ export const HomePage = () => {
     }
   
     return (
-      <select value={selectedValue} onChange={handleChange}>
-      <option value="All">All Mints</option>
-      <option value="Dev Test">Minsta Dev Tests</option>
-      </select>
-      );
+    <>
+      <label htmlFor="filter">
+        <span>Filter By: </span>
+        <select name="filter" value={selectedValue} onChange={handleChange}>
+       <option value="All">All Mints</option>
+       <option value="BTC Pizza">BTC Pizza Day</option>
+       <option value="By Owner">By Owner</option>
+     </select>
+      </label>
+    </>
+    );
   
   }
-
-  useEffect(() => {}, [selectedValue])
 
   return !totalLoading && !totalNfts ? (
     <main className="flex flex-col items-center justify-center h-screen">
@@ -61,10 +66,13 @@ export const HomePage = () => {
   ) : (
     <main className="py-20 lg:px-12 mx-auto flex flex-col items-center justify-center space-y-4 ">
       <DropDown />
+      {selectedValue === "By Owner" && (<><input type="text" className="filterInput" name="" id="" onChange={(e) => {setOwnerID(e.target.value)}} /></>)}
+
+
       <DynamicGrid>
-        <FirstToken {...firstTokenProps} />
+        {selectedValue === "By Owner" ? (<FirstToken {...firstTokenProps} {...{addFilter: selectedValue, ownerFilter: ownerID}} />):(<FirstToken {...firstTokenProps} {...{addFilter: selectedValue}} />)}
         <FirstFeed tokensFetched={tokensFetched} blockedNfts={blockedNfts} />
-        <FeedScroll blockedNfts={blockedNfts} addFilter={selectedValue} />
+        {selectedValue === "By Owner" ? (<FeedScroll blockedNfts={blockedNfts} addFilter={selectedValue} ownerFilter={ownerID} />):<FeedScroll blockedNfts={blockedNfts} addFilter={selectedValue} />}
       </DynamicGrid>
     </main>
   );
