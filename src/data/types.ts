@@ -33,6 +33,6 @@ export interface FirstTokenProps {
   isLoading: boolean;
   firstTokenisBlocked: boolean;
   isFirstTokenError:boolean
-  addFilter: string;
-  ownerFilter: string;
+  addFilter: string|null;
+  ownerFilter: string|null;
 }

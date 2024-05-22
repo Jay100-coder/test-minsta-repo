@@ -56,6 +56,8 @@ export const useHomePageData = () => {
     isLoading,
     firstTokenisBlocked,
     isFirstTokenError,
+    addFilter: null,
+    ownerFilter: null
   };
 
   return {
